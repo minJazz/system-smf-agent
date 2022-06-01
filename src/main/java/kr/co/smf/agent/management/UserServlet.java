@@ -40,7 +40,7 @@ public class UserServlet extends HttpServlet {
 			Agent agent = new Agent();
 			agent.setUserMail(userMail);
 			
-			agentUtil.updateAgentInfoFile(agent);
+			agentUtil.updateAgentInfoFile(agent);		//TODO changeDestination
 			
 			responseJson = "{" +"'code':200"+"}";
 					
