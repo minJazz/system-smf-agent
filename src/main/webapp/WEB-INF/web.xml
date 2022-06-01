@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+         id="WebApp_ID" 
+         version="3.1">
+  <display-name>Archetype Created Web Application</display-name>
+    
+    <servlet>
+        <servlet-name>growthSettingServlet</servlet-name>
+        <servlet-class>kr.co.smf.agent.management.GrowthSettingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>realTimeMeasureServlet</servlet-name>
+        <servlet-class>kr.co.smf.agent.measurement.RealTimeMeasureServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>userServlet</servlet-name>
+        <servlet-class>kr.co.smf.agent.management.UserServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>growthSettingServlet</servlet-name>
+        <url-pattern>/agent/setting</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>realTimeMeasureServlet</servlet-name>
+        <url-pattern>/agent/measure</url-pattern>    
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userServlet</servlet-name>
+        <url-pattern>/agent/user</url-pattern>
+    </servlet-mapping>
+</web-app>
