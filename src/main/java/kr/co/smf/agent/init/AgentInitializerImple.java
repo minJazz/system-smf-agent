@@ -1,7 +1,5 @@
 package kr.co.smf.agent.init;
 
-import java.io.IOException;
-
 import javax.servlet.ServletContextEvent;
 
 import kr.co.smf.agent.beans.Agent;
