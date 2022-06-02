@@ -31,8 +31,8 @@ public class AgentUtil {
 	private ObjectMapper objectMapper;
 	
 	public AgentUtil() {
-		client = new OkHttpClient();
-        objectMapper = new ObjectMapper();
+	    client = new OkHttpClient();
+      objectMapper = new ObjectMapper();
 	}
 
 	public void setAgentPropertiesPath(String agentPropertiesPath) {
@@ -109,8 +109,6 @@ public class AgentUtil {
 			fileReader = new FileReader(new File(settingPropertiesPath));
 			properties.load(fileReader);
 
-			properties.setProperty("settingName", setting.getSettingName());
-			properties.setProperty("userPhoneNumber", setting.getUserPhoneNumber());
 			properties.setProperty("temperature", String.valueOf(setting.getTemperature()));
 			properties.setProperty("humidity", String.valueOf(setting.getHumidity()));
 			properties.setProperty("co2", String.valueOf(setting.getCo2()));
@@ -192,34 +190,7 @@ public class AgentUtil {
 	}
 
 	public Measurement selectGrowthMeasurementFile() {
-		FileReader fileReader = null;
-		Measurement measurement = null;
-
-		try {
-			fileReader = new FileReader(measurementPropertiesPath);
-
-			Properties properties = new Properties();
-			properties.load(fileReader);
-
-			measurement = new Measurement();
-			measurement.setAgentIpAddress(properties.getProperty("agentIpAddress"));
-			measurement.setTemperature(Double.valueOf(properties.getProperty("temperature")));
-			measurement.setHumidity(Integer.valueOf(properties.getProperty("humidity")));
-			measurement.setCo2(Integer.valueOf(properties.getProperty("co2")));
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (fileReader != null) {
-					fileReader.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		return measurement;
+		return null;
 	}
 
 	public boolean updateGrowthMeasurementFile(Measurement measurement) {
