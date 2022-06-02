@@ -42,10 +42,10 @@ public class UserServlet extends HttpServlet {
 			
 			agentUtil.updateAgentInfoFile(agent);		//TODO changeDestination
 			
-			responseJson = "{" +"'code':200"+"}";
+			responseJson = "{" +"\"code\":200"+"}";
 					
 		} catch (IOException e) {
-			responseJson = "{" +"'code':300, 'message':'"+ e.getMessage() + "'}";
+			responseJson = "{" +"\"code\":300, \"message\":\""+ e.getMessage() + "\"}";
 		} finally {
 			try {
 				response.setContentType("application/json");
