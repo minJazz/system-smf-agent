@@ -7,6 +7,10 @@
          version="3.1">
   <display-name>Archetype Created Web Application</display-name>
     
+    <listener>
+    	<listener-class>kr.co.smf.agent.init.AgentInitializerImple</listener-class>
+    </listener>
+    
     <servlet>
         <servlet-name>growthSettingServlet</servlet-name>
         <servlet-class>kr.co.smf.agent.management.GrowthSettingServlet</servlet-class>

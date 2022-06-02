@@ -1,5 +1,10 @@
 package kr.co.smf.agent.init;
 
+import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 
 import kr.co.smf.agent.beans.Agent;
@@ -20,14 +25,22 @@ public class AgentInitializerImple implements AgentInitializer {
 			agent.setPreviousAgentIpAddress("empty");
 		}
 
-		// TODO 현재 ip 등록
+		try {
+			InetAddress local = InetAddress.getLocalHost();
+
+			System.out.println("My PC IP :" + local.getHostAddress());
+
+			agent.setNowAgentIpAddress(local.getHostAddress());
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
 
 		if (!agent.getPreviousAgentIpAddress().equals(agent.getNowAgentIpAddress())) {
 			try {
 				agentUtil.sendAgentInfo(agent);
 			} catch (Exception e) {
 				e.printStackTrace();
-				
+
 				return false;
 			}
 		}
@@ -37,13 +50,23 @@ public class AgentInitializerImple implements AgentInitializer {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
+		System.out.println("server init");
+
+		ServletContext servletContext = sce.getServletContext();
+		String path = servletContext
+				.getRealPath("/" + File.separator + "WEB-INF" + File.separator + "agent.properties");
+
+		System.out.println("path : " + path);
+
+		agentUtil.setAgentPropertiesPath(path);
+
 		int count = 0;
 		while (true) {
-			if (requestAddAgent() || count++ > 9) {
+			if (requestAddAgent() || count++ > -1) {
 				break;
 			}
 		}
-		
+
 	}
 
 	@Override
