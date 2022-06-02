@@ -52,16 +52,22 @@ public class AgentUtil {
 				"{\"previousAgentIpAddress\" : \"" + agent.getPreviousAgentIpAddress() + "\", " + 
 				 "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + ":8080\", " + 
 				 "\"userMail\" : \"" + agent.getUserMail()+ "\"}";
+		System.out.println("json " + json);
+		
 		RequestBody body = RequestBody.create(JSON, json);
 		
-		Request request = new Request.Builder().url("http://" + SERVER_IP_ADDRESS + "/agent").put(body)
+		Request request = new Request.Builder().url("http://" + SERVER_IP_ADDRESS + "/agent-info").put(body)
 				.build();
 
 		Response response = client.newCall(request).execute();
 
 		ResponseBody responseBody = response.body();
+		
+		System.out.println("responseBody : " + responseBody.string());
+		
 		JSONObject jsonResponse = new JSONObject(responseBody.string());
 
+		
 		if (!jsonResponse.getString("code").equals("200")) {
 			System.out.println("제어 요청 오류 : " + jsonResponse.getString("message")); // TODO Logger 추가 시 변경 요망
 		}
