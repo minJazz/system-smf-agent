@@ -14,9 +14,9 @@ public interface GrowthManagementService {
 
 	public boolean notifyEmergency(Setting setting, Measurement measurement);
 
-	public boolean changeDestination(String value);
+	public boolean changeDestination(String value, String path);
 
-	public Setting viewSettingValue();
+	public Setting viewSettingValue(String path);
 
-	public boolean editSettingValue(Setting setting);
+	public boolean editSettingValue(Setting setting, String path);
 }
