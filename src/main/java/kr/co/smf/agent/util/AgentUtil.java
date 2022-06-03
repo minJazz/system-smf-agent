@@ -91,7 +91,7 @@ public class AgentUtil {
 		ResponseBody responseBody = response.body();
 
 		JSONObject jsonResponse = new JSONObject(responseBody.string());
-
+    
 		if (!jsonResponse.getString("code").equals("200")) {
 			System.out.println("제어 요청 오류 : " + jsonResponse.getString("message")); // TODO Logger 추가 시 변경 요망
 		}
@@ -220,7 +220,34 @@ public class AgentUtil {
 	}
 
 	public Measurement selectGrowthMeasurementFile() {
-		return null;
+		FileReader fileReader = null;
+		Measurement measurement = null;
+		
+		try {
+			fileReader = new FileReader("." + File.separator + "WebContent" + File.separator + "WEB-INF"
+					+ File.separator + "measurement.properties");
+
+			Properties properties = new Properties();
+			properties.load(fileReader);
+			
+			measurement = new Measurement();
+			measurement.setAgentIpAddress(properties.getProperty("agentIpAddress"));
+			measurement.setCo2(Integer.valueOf(properties.getProperty("co2")));
+			measurement.setTemperature(Double.valueOf(properties.getProperty("temperature")));
+			measurement.setHumidity(Integer.valueOf(properties.getProperty("humidity")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fileReader != null) {
+					fileReader.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return measurement;
 	}
 
 	public boolean updateGrowthMeasurementFile(Measurement measurement) {
