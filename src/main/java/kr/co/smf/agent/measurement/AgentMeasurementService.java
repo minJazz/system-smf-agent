@@ -6,9 +6,9 @@ import java.util.Map;
 import kr.co.smf.agent.beans.Measurement;
 
 public interface AgentMeasurementService {
-	public String recordMeasurement(Map<String, String> value);
+	public void recordMeasurement(Map<String, String> value);
 
 	public Measurement measureGrowthInfo();
 
-	public File shootPhoto();
+	public void shootPhoto();
 }
