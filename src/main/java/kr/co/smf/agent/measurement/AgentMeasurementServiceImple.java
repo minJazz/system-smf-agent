@@ -15,14 +15,14 @@ public class AgentMeasurementServiceImple implements AgentMeasurementService {
 	}
 
 	@Override
-	public String recordMeasurement(Map<String, String> value) {
+	public void recordMeasurement(Map<String, String> value) {
 		Measurement measurement = new Measurement();
 		measurement.setAgentIpAddress(value.get("agentIpAddress"));
 		measurement.setTemperature(Double.valueOf(value.get("temperature")));
 		measurement.setHumidity(Integer.valueOf(value.get("agentIpAddress")));
 		measurement.setCo2(Integer.valueOf(value.get("agentIpAddress")));
 		
-		return null;
+		agentUtil.updateGrowthMeasurementFile(measurement);
 	}
 
 	@Override
@@ -31,8 +31,14 @@ public class AgentMeasurementServiceImple implements AgentMeasurementService {
 	}
 
 	@Override
-	public File shootPhoto() {
-		return null;
+	public void shootPhoto() {
+		String command = "sudo raspistill -o /home/mybatis/sensor/photo.png -w 640 -h 400";
+		
+		try {
+			Process process = Runtime.getRuntime().exec(command);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }
