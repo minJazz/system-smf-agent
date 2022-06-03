@@ -15,6 +15,7 @@ public class AgentInitializerImple implements AgentInitializer {
 
 	public AgentInitializerImple() {
 		agentUtil = new AgentUtil();
+		
 	}
 
 	@Override
@@ -59,6 +60,7 @@ public class AgentInitializerImple implements AgentInitializer {
 		System.out.println("path : " + path);
 
 		agentUtil.setAgentPropertiesPath(path);
+		agentUtil.setServerIp(agentUtil.getServerIp());
 
 		int count = 0;
 		while (true) {
