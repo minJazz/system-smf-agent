@@ -25,14 +25,14 @@ public class AgentUtil {
 	private String agentPropertiesPath;
 	private String measurementPropertiesPath;
 	private String settingPropertiesPath;
-	private static final String SERVER_IP_ADDRESS = "123.111.39.226";
-	
+	private String serverIp;
+
 	private OkHttpClient client;
 	private ObjectMapper objectMapper;
-	
+
 	public AgentUtil() {
-	    client = new OkHttpClient();
-      objectMapper = new ObjectMapper();
+		client = new OkHttpClient();
+		objectMapper = new ObjectMapper();
 	}
 
 	public void setAgentPropertiesPath(String agentPropertiesPath) {
@@ -47,24 +47,51 @@ public class AgentUtil {
 		this.settingPropertiesPath = settingPropertiesPath;
 	}
 
+	public void setServerIp(String serverIp) {
+		this.serverIp = serverIp;
+	}
+
+	public String getServerIp() {
+		Setting setting = new Setting();
+		FileReader fileReader = null;
+		Properties properties = new Properties();
+		String serverIp = null;
+
+		try {
+			fileReader = new FileReader(new File(agentPropertiesPath));
+			properties.load(fileReader);
+			serverIp = properties.getProperty("serverIp");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (fileReader != null) {
+				try {
+					fileReader.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+		return serverIp;
+	}
+
 	public void sendAgentInfo(Agent agent) throws IOException {
-		String json = 
-				"{\"previousAgentIpAddress\" : \"" + agent.getPreviousAgentIpAddress() + "\", " + 
-				 "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + ":8080\", " + 
-				 "\"userMail\" : \"" + agent.getUserMail()+ "\"}";
+		String json = "{\"previousAgentIpAddress\" : \"" + agent.getPreviousAgentIpAddress() + "\", "
+				+ "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + ":8080\", " + "\"userMail\" : \""
+				+ agent.getUserMail() + "\"}";
 		System.out.println("json " + json);
-		
+
 		RequestBody body = RequestBody.create(JSON, json);
-		
-		Request request = new Request.Builder().url("http://" + SERVER_IP_ADDRESS + "/agent-info").put(body)
-				.build();
+
+		Request request = new Request.Builder().url("http://" + serverIp + "/agent-info").put(body).build();
 
 		Response response = client.newCall(request).execute();
 
 		ResponseBody responseBody = response.body();
-		
+
 		JSONObject jsonResponse = new JSONObject(responseBody.string());
-		
+    
 		if (!jsonResponse.getString("code").equals("200")) {
 			System.out.println("제어 요청 오류 : " + jsonResponse.getString("message")); // TODO Logger 추가 시 변경 요망
 		}
