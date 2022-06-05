@@ -67,7 +67,7 @@ public class AgentUtil {
 
 	public void sendAgentInfo(Agent agent) throws IOException {
 		String json = "{\"previousAgentIpAddress\" : \"" + agent.getPreviousAgentIpAddress() + "\", "
-				+ "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + ":8080\", " + "\"userMail\" : \""
+				+ "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + "\", " + "\"userMail\" : \""
 				+ agent.getUserMail() + "\"}";
 		System.out.println("json " + json);
 
