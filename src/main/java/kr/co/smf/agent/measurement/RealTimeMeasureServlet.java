@@ -16,12 +16,8 @@ public class RealTimeMeasureServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     		throws ServletException, IOException {
-    	ServletContext servletContext = this.getServletContext();
-    	
-    	String directoryPath = servletContext.getRealPath(File.separator + "WEB-INF" + File.separator +  "measurement.properties");
     	
     	AgentUtil agentUtil = new AgentUtil();
-    	agentUtil.setMeasurementPropertiesPath(directoryPath);
     	
     	Measurement measurement = agentUtil.selectGrowthMeasurementFile();
     	
