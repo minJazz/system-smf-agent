@@ -131,25 +131,38 @@ public class GrowthManagementServiceImple implements GrowthManagementService {
 			}
 			
 					
-			if(h >= setting.getHumidity()) {
+			if(h > setting.getHumidity()) {
 				controlFan(true);
-				controlHeater(false);
-				System.out.println("heaterFan off");
 				System.out.println("h fan on");
-			} else {
+				controlHeater(false);
+				System.out.println("h heaterFan off");
+			} else if (h == setting.getHumidity()) {
+				controlHeater(false);
+				System.out.println("h heaterFan off");
 				controlFan(false);
 				System.out.println("h fan off");
-				if(c >= setting.getTemperature()) {
+				
+				if(c > setting.getTemperature()) {
 					controlHeater(false);
-					System.out.println("heaterFan off");
+					System.out.println("c heaterFan off");
 					controlFan(true);
 					System.out.println("c fan on");
-				} else {
+				} else if (c == setting.getTemperature()) {
+					controlFan(false);
+					System.out.println("c fan off");
+					controlHeater(false);
+					System.out.println("c heaterFan off");
+				} else if(c < setting.getTemperature()){
 					controlFan(false);
 					System.out.println("c fan off");
 					controlHeater(true);
-					System.out.println("heaterFan on");
+					System.out.println("c heaterFan on");
 				}
+			} else if(h < setting.getHumidity()){
+				controlFan(false);
+				System.out.println("h fan off");
+				controlHeater(false);
+				System.out.println("h heaterFan off");
 			}
 			
 		} else {
