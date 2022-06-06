@@ -24,10 +24,8 @@ public class GrowthSettingServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		GrowthManagementServiceImple gms = new GrowthManagementServiceImple();
-		ServletContext servletContext = this.getServletContext();
-		String path = servletContext.getRealPath(File.separator + "WEB-INF" + File.separator + "setting.properties");
 
-		Setting setting = gms.viewSettingValue(path);
+		Setting setting = gms.viewSettingValue();
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -43,8 +41,6 @@ public class GrowthSettingServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		GrowthManagementServiceImple gms = new GrowthManagementServiceImple();
-		ServletContext servletContext = this.getServletContext();
-		String path = servletContext.getRealPath(File.separator + "WEB-INF" + File.separator + "setting.properties");
 
 		BufferedReader bufferedReader = null;
 		String responseJson = "";
@@ -68,7 +64,7 @@ public class GrowthSettingServlet extends HttpServlet {
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 
-			if (gms.editSettingValue(setting, path)) {
+			if (gms.editSettingValue(setting)) {
 				responseJson = "{\"code\":\"200\", \"msg\":\"ok\"}";
 			} else {
 				responseJson = "{\"code\":\"300\", \"msg\":\"error\"}";

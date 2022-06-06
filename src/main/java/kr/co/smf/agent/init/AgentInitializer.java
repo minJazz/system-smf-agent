@@ -4,4 +4,5 @@ import javax.servlet.ServletContextListener;
 
 public interface AgentInitializer extends ServletContextListener {
 	public boolean requestAddAgent();
+	public String getLocalServerIp();
 }

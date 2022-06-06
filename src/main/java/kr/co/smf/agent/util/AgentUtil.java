@@ -22,9 +22,9 @@ import okhttp3.ResponseBody;
 
 public class AgentUtil {
 	private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-	private String agentPropertiesPath;
-	private String measurementPropertiesPath;
-	private String settingPropertiesPath;
+	private String agentPropertiesPath = "/home/mybatis/Desktop/scheduler/agent.properties";
+	private String measurementPropertiesPath = "/home/mybatis/Desktop/scheduler/measurement.properties";
+	private String settingPropertiesPath = "/home/mybatis/Desktop/scheduler/setting.properties";
 	private String serverIp;
 
 	private OkHttpClient client;
@@ -35,17 +35,6 @@ public class AgentUtil {
 		objectMapper = new ObjectMapper();
 	}
 
-	public void setAgentPropertiesPath(String agentPropertiesPath) {
-		this.agentPropertiesPath = agentPropertiesPath;
-	}
-
-	public void setMeasurementPropertiesPath(String measurementPropertiesPath) {
-		this.measurementPropertiesPath = measurementPropertiesPath;
-	}
-
-	public void setSettingPropertiesPath(String settingPropertiesPath) {
-		this.settingPropertiesPath = settingPropertiesPath;
-	}
 
 	public void setServerIp(String serverIp) {
 		this.serverIp = serverIp;
@@ -78,7 +67,7 @@ public class AgentUtil {
 
 	public void sendAgentInfo(Agent agent) throws IOException {
 		String json = "{\"previousAgentIpAddress\" : \"" + agent.getPreviousAgentIpAddress() + "\", "
-				+ "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + ":8080\", " + "\"userMail\" : \""
+				+ "\"nowAgentIpAddress\" : \"" + agent.getNowAgentIpAddress() + "\", " + "\"userMail\" : \""
 				+ agent.getUserMail() + "\"}";
 		System.out.println("json " + json);
 
@@ -224,8 +213,7 @@ public class AgentUtil {
 		Measurement measurement = null;
 		
 		try {
-			fileReader = new FileReader("." + File.separator + "WebContent" + File.separator + "WEB-INF"
-					+ File.separator + "measurement.properties");
+			fileReader = new FileReader(measurementPropertiesPath);
 
 			Properties properties = new Properties();
 			properties.load(fileReader);
@@ -255,19 +243,16 @@ public class AgentUtil {
 		FileOutputStream fileOutputStream = null;
 
 		try {
-			fileReader = new FileReader("." + File.separator + "WebContent" + File.separator + "WEB-INF"
-					+ File.separator + "measurement.properties");
+			fileReader = new FileReader(measurementPropertiesPath);
 
 			Properties properties = new Properties();
 			properties.load(fileReader);
 
-			properties.setProperty("agentIpAddress", measurement.getAgentIpAddress());
 			properties.setProperty("temperature", String.valueOf(measurement.getTemperature()));
 			properties.setProperty("humidity", String.valueOf(measurement.getHumidity()));
 			properties.setProperty("co2", String.valueOf(measurement.getCo2()));
 
-			fileOutputStream = new FileOutputStream("." + File.separator + "WebContent" + File.separator + "WEB-INF"
-					+ File.separator + "measurement.properties");
+			fileOutputStream = new FileOutputStream(measurementPropertiesPath);
 
 			properties.store(fileOutputStream, "갱신");
 			fileOutputStream.flush();
