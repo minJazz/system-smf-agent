@@ -27,29 +27,25 @@ public class RecordMeasureJobExecutor implements Job {
 			
 			Measurement measurement = agentUtil.selectGrowthMeasurementFile();
 			
-			StringBuffer json = new StringBuffer();
-			json.append("{");
-			json.append("  \"agentIpAddress\":\"" + measurement.getAgentIpAddress() + "\"");
-			json.append("  \"co2\":\"" + measurement.getCo2() + "\"");
-			json.append("  \"humidity\":\"" + measurement.getHumidity() + "\"");
-			json.append("  \"Temperature\":\"" + measurement.getTemperature() + "\"");
-			json.append("}");
+			StringBuffer data = new StringBuffer();
+			data.append(measurement.getAgentIpAddress()  + ":");
+			data.append(measurement.getCo2() + ":");
+			data.append(measurement.getHumidity() + ":");
+			data.append(measurement.getTemperature());
+
 			
-			System.out.println("----> test " + json);
 			File photo = new File("/home/mybatis/sensor/photo.png");
 			
-			RequestBody requestBody = new MultipartBody
-					.Builder()
-					.setType(MultipartBody.FORM)
-					.addFormDataPart("photo", photo.getName(), RequestBody.create(MULTIPART, photo))
-					.addFormDataPart("measurement", json.toString())
-					.build();
+			RequestBody requestBody = new MultipartBody.Builder()
+														.setType(MultipartBody.FORM)
+														.addFormDataPart("photo", photo.getName(), RequestBody.create(MULTIPART, photo))
+														.addFormDataPart("measurement", data.toString())
+														.build();
 			
-			Request request = new Request.Builder().url("/127.0.0.1:8080/record-info").post(requestBody).build();
+			Request request = new Request.Builder().url("http://" + agentUtil.getServerIp() + "/record-info").post(requestBody).build();
 			Response response = client.newCall(request).execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
-
 }
