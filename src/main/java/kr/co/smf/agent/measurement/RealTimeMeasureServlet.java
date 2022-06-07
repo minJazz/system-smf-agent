@@ -24,7 +24,6 @@ public class RealTimeMeasureServlet extends HttpServlet {
     	
     	Measurement measurement = agentUtil.selectGrowthMeasurementFile();
     	
-    	
     	response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter out = response.getWriter();

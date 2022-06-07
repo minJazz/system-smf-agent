@@ -11,6 +11,9 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import java.io.File;
+import java.io.FileReader;
 import java.lang.Math;
 
 import com.pi4j.io.gpio.GpioController;
@@ -28,6 +31,10 @@ import kr.co.smf.agent.util.AgentUtil;
 
 public class GrowthManagementServiceImple implements GrowthManagementService {
 	AgentUtil agentUtil = new AgentUtil();
+	
+	private static String destination;
+	private static String user;
+	private static String password;
 
 	@Override
 	public void manageGrowth() {
@@ -219,10 +226,29 @@ public class GrowthManagementServiceImple implements GrowthManagementService {
 		Agent agent = agentUtil.selectAgentInfoFile();
 		String userMail = agent.getUserMail();
 		
-		String recipient = "makewidely@gmail.com";
+		FileReader fileReader = null;
+		Properties properties = new Properties();
+		
 		// 1. 발신자의 메일 계정과 비밀번호 설정
-		String user = "alswo9588@gmail.com";
-		String password = "tsinezorohxtnhtw";
+		try {
+			fileReader = new FileReader(new File("/home/mybatis/Desktop/scheduler/mail.properties"));
+			properties.load(fileReader);
+
+			destination = properties.getProperty("destination");
+			user = properties.getProperty("user");
+			password = properties.getProperty("password");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (fileReader != null) {
+				try {
+					fileReader.close();
+				} catch (Exception e2) {
+					e2.printStackTrace();
+				}
+			}
+		}
+
 		// 2. Property에 SMTP 서버 정보 설정
 		Properties prop = new Properties();
 		prop.put("mail.smtp.host", "smtp.gmail.com");
