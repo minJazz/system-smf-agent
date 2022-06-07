@@ -9,6 +9,8 @@ public interface GrowthManagementService {
 	public void controlFan(boolean state);
 
 	public void controlHeater(boolean state);
+	
+	public void controlHumidified(boolean state);
 
 	public boolean notifyEmergency(Setting setting, Measurement measurement);
 
